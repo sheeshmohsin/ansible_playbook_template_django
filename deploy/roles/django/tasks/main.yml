@@ -1,0 +1,15 @@
+---
+- name: Run Django commands
+  shell: . {{ virtualenv_path }}/bin/activate
+         && cd {{ application_path }}
+         && {{ virtualenv_path }}/bin/python manage.py collectstatic --noinput
+         && {{ virtualenv_path }}/bin/python manage.py migrate
+         && {{ virtualenv_path }}/bin/python manage.py makemigrations smoochapp
+         && {{ virtualenv_path }}/bin/python manage.py migrate smoochapp
+  tags: django
+
+- name: Create Superuser
+  shell: . {{ virtualenv_path }}/bin/activate
+         && cd {{ application_path }}
+         && echo "from django.contrib.auth.models import User; User.objects.create_superuser('joboti', 'joboti@gmail.com', 'Jobotiproject1@')" | {{ virtualenv_path }}/bin/python manage.py shell
+  tags: django_superuser

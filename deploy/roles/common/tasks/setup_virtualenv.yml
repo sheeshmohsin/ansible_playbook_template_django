@@ -1,0 +1,15 @@
+---
+
+- name: Create the virtualenv
+  command: virtualenv {{ virtualenv_path }} --no-site-packages
+           creates={{ virtualenv_path }}/bin/activate
+
+- name: Install requirements
+  pip:
+    requirements={{ project_path }}/requirements.txt
+    virtualenv={{ virtualenv_path }}
+
+- name: Create the django log folder
+  file: path={{ django_log_dir }}
+        mode=0774
+        state=directory

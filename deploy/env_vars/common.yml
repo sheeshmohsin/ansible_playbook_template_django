@@ -1,0 +1,21 @@
+---
+# Variables listed here are applicable to all host groups
+application_name: "azumi_joboti_client_portal"
+application_path: "{{ project_path }}"
+requirements_file: "{{ project_path }}/requirements.txt"
+
+# Django settings
+django_settings_file: "joboti.settings"
+django_log_dir: "{{ project_path }}/logs"
+django_log_file: "{{ django_log_dir }}/django_ken_prod.log"
+
+# log files
+application_log_dir: "{{ virtualenv_path }}/logs"
+application_log_file: "{{ application_log_dir }}/gunicorn_supervisor.log"
+nginx_log_dir: "/var/www/logs"
+
+# User
+ansible_connection: ssh
+git_repo_ssh_public_key: "/home/sheeshmohsin/.ssh/id_rsa.pub"
+git_repo_ssh_private_key: "/home/sheeshmohsin/.ssh/id_rsa"
+git_repo: "azumi_joboti_client_portal"

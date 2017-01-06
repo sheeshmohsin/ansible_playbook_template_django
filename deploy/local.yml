@@ -1,0 +1,11 @@
+---
+- name: Set up application servers
+  hosts: local
+  sudo: yes
+  remote_user: ubuntu
+  roles:
+    - common
+    - django
+  vars_files:
+    - env_vars/common.yml
+    - env_vars/local.yml

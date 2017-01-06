@@ -1,0 +1,28 @@
+server {
+        listen 80;
+
+        access_log on;
+        access_log {{ project_path }}/logs/nginx-access.log;
+        error_log {{ project_path }}/logs/nginx-error.log;
+
+        location /static {
+                autoindex on;
+                alias {{ project_path }}/staticfiles/;
+        }
+        
+        location /media {
+                autoindex on;
+                alias {{ project_path }}/media/;
+        }
+
+        location / {
+                proxy_pass http://0.0.0.0:8000;
+
+                # proxy_pass_request_headers on;
+                # proxy_set_header Host $server_name;
+                # proxy_set_header X-Forwarded-Host $server_name;
+                # proxy_set_header X-Real-IP $server_name;
+
+                # add_header P3P 'CP="ALL DSP COR PSAa PSDa OUR NOR ONL UNI COM NAV"';
+        }
+}

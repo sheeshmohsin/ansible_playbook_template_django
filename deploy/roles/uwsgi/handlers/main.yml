@@ -1,0 +1,3 @@
+---
+- name: restart uwsgi
+  shell: "{{ virtualenv_path }}/bin/uwsgi --reload /home/ubuntu/wsgi-pid.pid"

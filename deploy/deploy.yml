@@ -1,0 +1,13 @@
+---
+- name: Set up application servers
+  hosts: appservers
+  remote_user: ubuntu
+  roles:
+    - common
+    - django
+    - uwsgi
+    - nginx
+    - supervisor
+  vars_files:
+    - env_vars/common.yml
+    - env_vars/prod.yml

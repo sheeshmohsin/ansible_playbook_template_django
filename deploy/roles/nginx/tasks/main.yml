@@ -1,0 +1,18 @@
+---
+
+- name: Install nginx
+  apt: name=nginx state=present update_cache=no
+  sudo: yes
+  tags: packages
+
+- name: static config vhost
+  sudo: yes
+  template: src=default.conf.j2 dest=/etc/nginx/sites-available/default mode=0644
+  tags: nginx-config
+  notify: restart nginx
+  when: prod
+
+- name: restart nginx
+  sudo: yes
+  service: name=nginx state=restarted
+

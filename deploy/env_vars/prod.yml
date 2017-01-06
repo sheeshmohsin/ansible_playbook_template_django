@@ -1,0 +1,13 @@
+---
+# Production 
+prod: true
+local: false
+
+repository: "git@github.com:cojito/azumi_joboti_client_portal.git"
+deploy_version:  "master"
+virtualenv_path: "/home/ubuntu/virtualenv/{{ application_name }}"
+project_path: "/home/ubuntu/azumi_joboti_client_portal"
+ansible_ssh_user: "ubuntu"
+ansible_ssh_pass: "Jobotiproject1@"
+git_repo_ssh_public_key: "/home/sheeshmohsin/.ssh/id_rsa.pub"
+git_repo_ssh_private_key: "/home/sheeshmohsin/.ssh/id_rsa"

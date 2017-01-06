@@ -1,0 +1,20 @@
+- name: templates {{ repository }}
+  template: src=supervisor-server.conf dest=/etc/supervisor/conf.d/ mode=0644
+  sudo: yes
+  tags: supervisor-config
+
+- name: reread supervisor
+  shell: supervisorctl reread
+  sudo: yes
+  tags: re-supervisor
+
+- name: update supervisor
+  shell: supervisorctl update
+  sudo: yes
+  tags: up-supervisor
+
+- name: restart supervisor
+  shell: supervisorctl restart all
+  sudo: yes
+  tags: res-supervisor
+

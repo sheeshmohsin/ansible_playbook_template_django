@@ -1,0 +1,16 @@
+############################
+##### Clone Repository #####
+############################
+
+- name: Copy SSH Key - Private
+  copy: src={{ git_repo_ssh_private_key }} dest=/home/{{ ansible_ssh_user }}/.ssh/{{ git_repo }}_rsa owner={{ ansible_ssh_user }} group=sudo mode=0600
+  when: git_repo_ssh_private_key != false
+
+- name: Copy SSH Key - Public
+  copy: src={{ git_repo_ssh_public_key }} dest=/home/{{ ansible_ssh_user }}/.ssh/{{ git_repo }}_rsa.pub owner={{ ansible_ssh_user }} group=sudo mode=0644
+  when: git_repo_ssh_public_key != false
+
+- name: Clone Git repo (Private)
+  git: repo={{ repository }} dest={{ project_path }} force=yes accept_hostkey=yes key_file=/home/{{ ansible_ssh_user }}/.ssh/{{ git_repo }}_rsa
+  register: gitcode
+  when: git_repo_ssh_private_key != false

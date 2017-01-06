@@ -1,0 +1,7 @@
+- name: templates {{ repository }}
+  template: src=wsgi.ini dest={{ project_path}}/wsgi.ini mode=0644
+  tags: uwsgi-config
+
+- name: start uwsgi
+  shell: "{{ virtualenv_path }}/bin/uwsgi --ini {{ project_path}}/wsgi.ini:sheesh_dev"
+  tags: st-uwsgi

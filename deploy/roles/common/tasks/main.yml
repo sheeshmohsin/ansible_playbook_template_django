@@ -1,0 +1,58 @@
+---
+
+- name: System Update
+  apt: update_cache=yes cache_valid_time=3600
+  sudo: yes
+
+- name: Install python 2.7 global packages
+  apt: name=python2.7,python-dev,python-pip,python-virtualenv state=present 
+  sudo: yes
+  tags: packages
+
+- name: Install libmysqlclient-dev
+  apt: name=libmysqlclient-dev state=present
+  sudo: yes
+  tags: packages
+
+- name: Install git
+  apt: name=git state=present
+  sudo: yes
+  tags: packages
+
+- name: Install supervisor
+  apt: name=supervisor state=present
+  sudo: yes 
+  tags: packages
+
+- name: Install redis server
+  apt: name=redis-server state=present
+  sudo: yes
+  tags: packages
+
+- name: Copy template for installing SQL Server ODBC driver
+  template: src=msodbc_setup.sh dest=/home/ubuntu/ mode=0644
+  tags: msodbc_template
+
+- name: Install sql driver msodbcsql
+  shell: . /home/ubuntu/msodbc_setup.sh
+  tags: msodbc_install
+
+- name: Create Project path
+  file: path={{ project_path }} state=directory mode=0775
+  when: not local
+
+- name: Create nginx logs dir
+  file: path={{ nginx_log_dir }} state=directory mode=0775
+  sudo: yes
+
+# - name: Copy Project
+#   copy: src=/home/sheeshmohsin/Codes/bitbucket/pagerapi/ dest={{ project_path}}
+# - name: Copy the code from local repository
+#   synchronize: src={{ local_repo }} dest={{ project_path }}
+#   tags: deploy
+#   when: local
+
+- include: git_clone.yml
+  when: not local
+
+- include: setup_virtualenv.yml
